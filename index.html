@@ -1,0 +1,261 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta charset="utf-8">
+<title>jQuery时间日历插件 noshCalendar - estorm.cn</title>
+<meta name="keywords" content="时间,日历,jQuery插件">
+<meta name="description" content="jQuery时间日历插件 noshCalendar，支持时间范围">
+<meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+<link rel="shortcut icon" href="http://static.estorm.cn/static/favicon.ico">
+<link rel="bookmark" href="http://static.estorm.cn/static/favicon.ico" type="image/x-icon">
+<style>
+    * { box-sizing: border-box; }
+    *::after, *::before { box-sizing: border-box; }
+
+    html { font-size: 10px; font-family: "Hiragino Sans GB", "微软雅黑", "Microsoft Yahei", Simsun, "宋体", Arial, Helvetica, sans-serif; color: #666666; line-height: 140%; background: #ffffff; }
+    html, body { width: 100%; height: 100%; margin: 0; margin: 0; }
+    body { font-size: 1.6rem; }
+
+    .header { width: 100%; height: 4.8rem; position: fixed; left: 0; top: 0; background: #333333; box-shadow: 0 0.3rem 0.5rem rgba(0,0,0,0.2); z-index: 10; }
+    .header .logo { margin: 0; padding: 0; float: left; }
+    .header .logo a { width: 1.2rem; height: 4.8rem; display: block; position: relative; text-decoration: none; font-size: 1.6rem; line-height: 4.8rem; }
+    .header .logo a > span { color: #669900; padding-left: 0.8rem; }
+    .header .logo a > img { position: absolute; left: 0.8rem; top: 0.9rem; background: #333333; }
+
+    .header .right { max-width: 60%; float: right; }
+
+    .header .top-search { width: 12rem; height: 2.6rem; position: relative; background: #f5f5f5; float: left; border-radius: 1.3rem; overflow: hidden; top: 1.1rem; }
+    .header .top-search input { width: 100%; height: 2.4rem; border: 0; background: none; float: left; margin: 0; padding: 0 1rem; }
+    .header .top-search button { height: 2.8rem; position: absolute; right: 0; top: 0; border: 0; cursor: pointer; border: 0; background: none; }
+
+    .header .nav { float: right; height: 4.8rem; position: relative; margin-left: 1rem; }
+    .header .nav > a { display: block; height: 100%; padding: 1.5rem 1rem; }
+    .header .nav > a:hover, .header .nav > a:focus { background: #000000; }
+    .header .nav ul { position: absolute; right: 0; top: 2.8rem; background: #ffffff; box-shadow: 0 0 0.5rem rgba(0,0,0,0.2); padding: 0.5rem 0; text-align: center; border-radius: 2px 0 0 2px; list-style: none; display: none; }
+    .header .nav ul li { border-bottom: 1px #dddddd solid; display: block; }
+    .header .nav ul li:last-child { border-bottom: 0; }
+    .header .nav li a { font-size: 1.4rem; text-decoration: none; white-space: nowrap; display: block; padding: 0.8rem 1.2rem; }
+    .header .nav li a { text-decoration: none; color: #669900; transition: all 300ms ease-in-out; }
+    .header .nav li a:hover { color: #e96900; }
+    .header .nav:hover ul { display: block; }
+
+    .container { width: 100%; float: left; clear: both; padding: 5rem 3% 0; }
+    .footer { width: 100%; float: left; clear: both; text-align: center; font-size: 12px; color: #666666; padding: 1.5rem 0; }
+    .footer a { color: #669900; position: relative; }
+</style>
+<link type="text/css" rel="stylesheet" href="calendar.css">
+<style>
+    .input-demo li { list-style: none; margin: 0; padding: 10px 0; }
+    .input-demo input { width: 300px; height: 36px; border: 1px #dddddd solid; border-radius: 3px; padding: 5px 10px; font-size: 14px; }
+</style>
+</head>
+
+<body>
+    <div class="header">
+    <h1 class="logo">
+        <a href="#">
+            <span>ESTORM</span>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAAeCAYAAADnydqVAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjIxQ0Q0NTJGMjY2QjExRTc4RjE5OTg0MUIwNEY5RThGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjIxQ0Q0NTMwMjY2QjExRTc4RjE5OTg0MUIwNEY5RThGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjFDRDQ1MkQyNjZCMTFFNzhGMTk5ODQxQjA0RjlFOEYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjFDRDQ1MkUyNjZCMTFFNzhGMTk5ODQxQjA0RjlFOEYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz739e+yAAAFWklEQVR42uxbW6hbRRSdqFfFx0dK9cMHxWh9UesjBYsoPkgt/qggqVoRqtIEHyD404Dgh4Ikin+leCO+0CLeICIVsdxY8YU/N6Wi6FdThNY3jVooilfr2j1r6mY852TOSUJuwhlYnOTMzpx9Zs3es2fPJFeZNSMvs5UjJivjKSdE3L8UeAC4BSgAJ6Vs/zrg0ziBXC5nMMiK+FgBykCeVb1m1SyzcpDZgks9ohlXtkjZEtAFmqhvhP0Qsgf1M4EW0IB810O2LW0DHaV/Uf2kFvXcCF2kr7dQ70JYO1E6wIjaYW0e53yfAZ4DvgAeAy4ZgFzfl5JOWWAH5VVVPkEzrqwl17Cj6njOgsdv89RjgYOkn6zoPk/96w65Sfshr/qh4Pmux3SoNnOVfgSfCOwgsccDbwG3AyuAZQlwJvAL2zwc91JQShTUk4RYQ43Y4IjrOlva/F51ZEuq3o7sIr1AVLHWaDtujp0eJdugBRlFSNvRL0mpK/La6l1rSq84Hersz0gX/QywHvgduBN4n9Z7E3Cap5IzHFHLgZ+AL/vIl9RLxboz1PX4QjLaratu93GBR+shv5cklG0bMbJddnaB+rViZNu0YCkd3Fvn6JeklFTb6zzkXR3yYfpagi8CHgaO0HJ2AmcDu4ALUyj7F7CZ17hSUAQ2RjgTNH1dKDut7uoXIdtWQWprQB21F0gSwLZhuSZKX0vwZn6eI7lSniK53wFfez7vH2Af8DywJ+kcRCvNygii6PW8bld1l/P6EPDOiJ6vR2sx6ejNij/BK3ndrepk/rwK2Ao80qedHynza0L30oF76an5IyN4RATbaHpR1T0OXAucD5zj0dbLwAcpdGipNWQto2Q0BH8LXACsAn7gvQP8LpZ1locF7xrATR9d+8naE/NwJ6Nl+ATPk+C7HTf5B+tO8WhL1tF/Jg5vq6YFYrWbHivB0KWkM2STTrB1za/xei9wBXAN731Pkg964BCwjUmSNG7a0JLHTe6cIrc1LRb8OfAGLfgTldiQ5dFXnm1JWvNBym+bQDftJidq07Bs05ksSVHeochdZBTt63bXcqCsTUqw46bL43bTJtigmIpYQBP8NOdRyT7NsO5DYL9nW5fxuielLuOOpm3sYXdyJEe1ZlrmYJl3N5kgE3UjcCvwHpMdZU9cTJK2DtjBhYidnJETzBywHVxFJ+CaaAu+D8hxHv6M93awXnaHTvZoS4Ksn9MqsoTcdFPNxxOfXbMWfDOv2516segVdFlxWD4IuSHRdHlcHTJt+XBrwYWQ+fMMWvHVnm3dAHw0hHnQRtOFsFMVWUkfZLnlSZIra9x9fdqRDf5vhhjoWCtuZBQNh2AhUPaEV5tge9Aoy73fjG436X/ukRvYJWPGEmhNLcE7SfA9JjjJYZMcVwLP8r5P+ZtryJeAvSl16pDgUkbP8AgWQmS7b6MJNuslkn7CBCnLlea/7UTf8iiXWmk2IGyQk8/oGR7BcoryVS6X3gZuM0FWajU/n+rZnpzhkmzY9cArwHm0aq/CQ24VZclmAC9QnLB5vGv6nxsbKMgSC5Z8sqQaPwZeBF4H3gV+S9DmCybIfp1rguxWZGar2swVeGz2GMcqom8OuJadZbJibil5A+hjjwe3nFWCXUGIzvNOwNlMu3zTBB/melg65i4THEWtDvg+/U5jlk34YXZ5+dQEy2+dw/RhUfq4ij4m3HAGpT34HxaDpLJq9+D7Ic7DMve+OaTkRVLXWgVBGzzn6TiSZXDW6PosuVXPtnoJnttLqF8vQl959zUkupvw95HPy3n8N+n0PuvluCIDZjH7b9LSTHRokrIyoeVfAQYAMAOP4d47cT8AAAAASUVORK5CYII=">
+        </a>
+    </h1>
+    <div class="right">
+        <div class="top-search">
+            <form id="schform">
+                <input type="text" name="keyboard" id="keyboard" placeholder="试试搜索">
+                <button type="submit" name="submit" value="topsubmit">
+                    <svg t="1492763324439" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3191" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16"><defs><style type="text/css"></style></defs><path d="M999.104 878.336l-244.992-245.056c-2.816-2.88-6.016-4.992-9.024-7.36 41.408-63.552 65.536-139.2 65.536-220.672 0-223.872-181.44-405.376-405.312-405.376C181.504-0.064 0 181.44 0 405.312s181.568 405.312 405.312 405.312c81.472 0 157.184-24.192 220.8-65.6 2.304 3.008 4.48 6.08 7.232 8.96l245.056 245.12c16.704 16.64 38.528 24.96 60.352 24.96 21.824 0 43.648-8.32 60.352-24.96C1032.32 965.76 1032.32 911.68 999.104 878.336M405.312 682.624C252.416 682.624 128 558.208 128 405.312s124.48-277.376 277.312-277.376c152.896 0 277.312 124.48 277.312 277.376S558.208 682.624 405.312 682.624" p-id="3192" fill="#999999"></path></svg>
+                </button>
+            </form>
+        </div>
+        <div class="nav">
+            <a href="javascript:;">
+                <svg t="1492763282881" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2470" xmlns:xlink="http://www.w3.org/1999/xlink" width="18" height="18"><defs><style type="text/css"></style></defs><path d="M100.67968 93.049417l822.660389 0c50.487589 0 91.400046 37.517166 91.400046 83.790263 0 46.272366-40.913189 83.790263-91.400046 83.790263L100.67968 260.629943c-50.507337 0-91.420526-37.517897-91.420526-83.790263C9.259154 130.566583 50.172343 93.049417 100.67968 93.049417z" p-id="2471" fill="#ffffff"></path><path d="M100.67968 428.209737l822.660389 0c50.487589 0 91.400046 37.517166 91.400046 83.790263s-40.913189 83.790263-91.400046 83.790263L100.67968 595.790263c-50.507337 0-91.420526-37.517166-91.420526-83.790263S50.172343 428.209737 100.67968 428.209737z" p-id="2472" fill="#ffffff"></path><path d="M100.67968 763.370057l822.660389 0c50.487589 0 91.400046 37.517166 91.400046 83.790263 0 46.272366-40.913189 83.790263-91.400046 83.790263L100.67968 930.950583c-50.507337 0-91.420526-37.517166-91.420526-83.790263C9.259154 800.887954 50.172343 763.370057 100.67968 763.370057z" p-id="2473" fill="#ffffff"></path></svg>
+            </a>
+            <!--ul>
+                <li><a href="#">jQuery插件</a></li>
+                <li><a href="#">CSS效果</a></li>
+                <li><a href="#">页面模板</a></li>
+                <li><a href="#">整站项目</a></li>
+            </ul-->
+        </div>
+    </div>
+</div>
+    <div class="container">
+        <div class="input-demo">
+            <ul>
+                <li>
+                    <label>
+                        <span class="title">输入生日：</span>
+                        <input value="1984-05-10" data-footer="false" data-format="YYYY-MM-DD" data-end="today">
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <span class="title">出发时间：</span>
+                        <input value="2017-05-10 10:20" data-format="YYYY-MM-DD HH:mm" data-start="today">
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <span class="title">使用时间：</span>
+                        <input value="2017/04/18 11:23:14" data-show="0" data-footer="true" data-format="YYYY/MM/DD HH:mm:ss" data-start="2015/02/03 11:23:14" data-end="2017/04/18 11:23:14">
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <span class="title">开始时间：</span>
+                        <input value="" data-end="#end-input" id="start-input">
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <span class="title">结束时间：</span>
+                        <input value="" data-start="#start-input" id="end-input">
+                    </label>
+                </li>
+            </ul>
+        </div>
+        <div id="calendar-box" class="nosh-calendar" style="margin: 50px 0;"></div>
+    </div>
+    <div class="footer">
+    Copyright &copy; <span class="js-copy-right-year" data-from="2005"></span> <a href="http://www.estorm.cn/">Estorm.cn</a>.
+    <a href="http://www.miitbeian.gov.cn" target="_blank">粤ICP备14032870号-1</a>
+</div>
+<script src="http://static.estorm.cn/bower_components/jquery/dist/jquery.js"></script>
+<script>
+/*!
+ * jQuery 自动更新版权年份插件 v0.0.1
+ *
+ * 使用方法: $('.js-copy-right-year').copyRight();
+ * html代码: <span class="js-copy-right-year" data-from="2005"></span>
+ * 显示结果: <span class="js-copy-right-year" data-from="2005">2005-2017</span>
+ */
+;(function(factory) {
+    'use strict';
+    if (typeof define === 'function' && define.amd) {
+		// AMD (Register as an anonymous module)
+        define(['jquery'], factory);
+    } else if (typeof exports === 'object') {
+		// Node/CommonJS
+        module.exports = factory(require('jquery'));
+    } else {
+		// Browser globals
+        factory(jQuery);
+    }
+
+}(function($) {
+    'use strict';
+	$.fn.copyRight = function(){
+		var items = this;
+        $.each(items, function(){
+            var me = $(this);
+            var from = me.data('from');
+            var to = new Date().getFullYear();
+            from = from ? from : to - 1;
+            me.text(from +' - '+ to);
+        });
+        return this;
+	};
+    $(document).ready(function(){
+        $('.js-copy-right-year').copyRight();
+    });
+}));
+</script>
+    <script src="http://static.estorm.cn/bower_components/moment/moment.js"></script>
+    <script src="calendar.js"></script>
+    <script>
+    $(document).ready(function(){
+        //普通应用
+        $('.input-demo input').noshCalendar();
+
+        //高级应用
+        var myCalendar = function(){
+            var id = 'calendar-box';
+            var calendar = new window.noshCalendar.c();
+            var defFormat = 'YYYY-MM-DD HH:mm:ss';
+            var defTime = moment();
+            var opts = {
+                input: $('#'+ id),
+                width: 430,
+                value: defTime.format(defFormat),
+                start: '',
+                end: '',
+                show: 1,
+                footer: false,
+                format: defFormat
+            };
+            var styles = {
+                position: 'inherit'
+            };
+
+            /**这里可以开始重构模板
+            //select option
+            calendar.numberSelectOptions = function(){
+                return 'numberSelectOptions';
+            };
+            //头
+            calendar.header = function(){
+                return 'header';
+            };
+            //尾
+            calendar.footer = function(){
+                return 'footer';
+            };
+            //月
+            calendar.days = function(){
+                return 'days';
+            };
+            //body
+            calendar.body = function(){
+                return 'body';
+            };*/
+            //这里可以自定义过滤数据
+            calendar.dataFilter = function(data){
+                /*$.each(data.day.list[1].list, function(k, v) {
+                    data.day.list[1].list[k].text = '^_^';
+                });*/
+                return data;
+            };
+
+            $.subCal('initCurrent', function(event, current){ //初始化当前对象完成 与上文opts 一致
+                if(current.input.is(opts.input)){
+                    console.log('我是我');
+                } else {
+                    console.log('他不是我!!');
+                }
+            });
+
+            $.subCal('init', function(event, box){ //初始化完成
+                console.log(box);
+            });
+
+            $.subCal('show', function(event, box, current, data){ //显示完成
+                console.log(box, current, data);
+            });
+
+            $.subCal('closed', function(event, input){ //关闭完成
+                console.log(input);
+            });
+
+            $.subCal('confirm', function(event, current, val){ //点击确认按钮
+                console.log(current, val);
+            });
+
+            $.subCal('confirmToday', function(event, current, val){ //点击今天按钮
+                console.log(current, val);
+            });
+
+            $.subCal('change', function(event, box, current, d, data){ //每次值变化
+                console.log(box, current, d, data);
+            });
+
+            calendar.init(null, id);
+            calendar.show(opts, styles);
+        };
+        myCalendar();
+    });
+    </script>
+</body>
+</html>
