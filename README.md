@@ -1,12 +1,16 @@
 # jQuery 日历插件 noshCalendar
 
 依赖moment.js [http://momentjs.com/][1]
+
 支持jQuery 1.8+
 
 #### 一、安装
 引入calendar.js和calendar.css即可。
+
 在线演示：[http://demo.estorm.cn/noshCalendar/index.html][2]
+
 github: [https://github.com/myestorm/noshCalendar][3]
+
 bug：[https://github.com/myestorm/noshCalendar/issues][4]
 
 #### 二、基础用法
